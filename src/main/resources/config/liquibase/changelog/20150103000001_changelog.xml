@@ -79,13 +79,13 @@
 
         <addForeignKeyConstraint baseColumnNames="dictionary_id"
                                  baseTableName="T_DICTIONARY_ELEMENT"
-                                 constraintName="fk_dictionary_of_element"
+                                 constraintName="fk_dict_of_element"
                                  referencedColumnNames="id"
                                  referencedTableName="T_DICTIONARY"/>
 
         <addForeignKeyConstraint baseColumnNames="value_type_id"
                                  baseTableName="T_DICTIONARY"
-                                 constraintName="fk_dictionary_value_type"
+                                 constraintName="fk_dict_value_type"
                                  referencedColumnNames="id"
                                  referencedTableName="T_DICTIONARY_ELEMENT"/>
 
@@ -143,7 +143,7 @@
 
         <addForeignKeyConstraint baseColumnNames="relation_id"
                                  baseTableName="T_ELEMENT_RELATION"
-                                 constraintName="fk_element_dictionary_relation_id"
+                                 constraintName="fk_elem_dict_rel_id"
                                  referencedColumnNames="id"
                                  referencedTableName="T_DICTIONARY_RELATION"/>
 
@@ -177,24 +177,28 @@
             <column name="collection_id" value="1"/>
         </insert>
         <insert tableName="T_DICTIONARY_ELEMENT">
+            <column name="id" value="1"/>
             <column name="code" value="C_SYSTEM.D_VALUE_TYPES.DE_STRING"/>
             <column name="description" value="Value is a string."/>
             <column name="default_value" value="String"/>
             <column name="dictionary_id" value="1"/>
         </insert>
         <insert tableName="T_DICTIONARY_ELEMENT">
+            <column name="id" value="2"/>
             <column name="code" value="C_SYSTEM.D_VALUE_TYPES.DE_NUMBER"/>
             <column name="description" value="Value is a number."/>
             <column name="default_value" value="Number"/>
             <column name="dictionary_id" value="1"/>
         </insert>
         <insert tableName="T_DICTIONARY_ELEMENT">
+            <column name="id" value="3"/>
             <column name="code" value="C_SYSTEM.D_VALUE_TYPES.DE_DATE"/>
             <column name="description" value="Value is a date."/>
             <column name="default_value" value="Date"/>
             <column name="dictionary_id" value="1"/>
         </insert>
         <insert tableName="T_DICTIONARY_ELEMENT">
+            <column name="id" value="4"/>
             <column name="code" value="C_SYSTEM.D_VALUE_TYPES.DE_BOOL"/>
             <column name="description" value="Value is a boolean."/>
             <column name="default_value" value="Boolean"/>
@@ -208,12 +212,14 @@
             <column name="collection_id" value="1"/>
         </insert>
         <insert tableName="T_DICTIONARY_ELEMENT">
+            <column name="id" value="5"/>
             <column name="code" value="C_SYSTEM.D_LANGUAGES.DE_LANG_EN"/>
             <column name="description" value="English"/>
             <column name="default_value" value="English"/>
             <column name="dictionary_id" value="2"/>
         </insert>
         <insert tableName="T_DICTIONARY_ELEMENT">
+            <column name="id" value="6"/>
             <column name="code" value="C_SYSTEM.D_LANGUAGES.DE_LANG_RO"/>
             <column name="description" value="Romanian"/>
             <column name="default_value" value="Romanian"/>
