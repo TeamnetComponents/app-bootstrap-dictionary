@@ -51,6 +51,17 @@ public class DictionaryElementResource {
     }
 
     /**
+     * GET  /rest/dictionaryElementsByDictionaryCode/{code} -> get all the dictionary elements by dictionary code.
+     */
+    @RequestMapping(value = "/rest/dictionaryElementsByDictionaryCode/{code}",
+            method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    @Timed
+    public ResponseEntity getAllByDictionaryCode(@PathVariable String code) {
+        log.debug("REST request to get all DictionaryElements by Dictionary code: "+code);
+        return new ResponseEntity<>(dictionaryElementRepository.findByDictionaryCode(code), HttpStatus.OK);
+    }
+
+    /**
      * GET  /rest/dictionaryElements/:id -> get the "id" dictionary element.
      */
     @RequestMapping(value = "/rest/dictionaryElements/{id}",

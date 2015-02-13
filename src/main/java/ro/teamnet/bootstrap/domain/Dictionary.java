@@ -4,6 +4,7 @@ import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 import javax.persistence.*;
+import java.util.Collection;
 
 /**
  * A dictionary.
@@ -35,6 +36,9 @@ public class Dictionary {
     @ManyToOne
     @JoinColumn(name = "value_type_id", nullable = true)
     private DictionaryElement valueType;
+
+    @OneToMany(mappedBy = "dictionary")
+    Collection<DictionaryElement> dictionaryElements;
 
     public Long getId() {
         return id;
@@ -92,6 +96,14 @@ public class Dictionary {
         this.valueType = valueType;
     }
 
+    public Collection<DictionaryElement> getDictionaryElements() {
+        return dictionaryElements;
+    }
+
+    public void setDictionaryElements(Collection<DictionaryElement> dictionaryElements) {
+        this.dictionaryElements = dictionaryElements;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -118,6 +130,8 @@ public class Dictionary {
                 ", description='" + description + '\'' +
                 ", hasI18n=" + hasI18n +
                 ", collection=" + collection +
+                ", valueType=" + valueType +
+                ", dictionaryElements=" + dictionaryElements +
                 '}';
     }
 }

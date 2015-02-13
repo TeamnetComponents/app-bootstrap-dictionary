@@ -177,28 +177,24 @@
             <column name="collection_id" value="1"/>
         </insert>
         <insert tableName="T_DICTIONARY_ELEMENT">
-            <column name="id" value="1"/>
             <column name="code" value="C_SYSTEM.D_VALUE_TYPES.DE_STRING"/>
             <column name="description" value="Value is a string."/>
             <column name="default_value" value="String"/>
             <column name="dictionary_id" value="1"/>
         </insert>
         <insert tableName="T_DICTIONARY_ELEMENT">
-            <column name="id" value="2"/>
             <column name="code" value="C_SYSTEM.D_VALUE_TYPES.DE_NUMBER"/>
             <column name="description" value="Value is a number."/>
             <column name="default_value" value="Number"/>
             <column name="dictionary_id" value="1"/>
         </insert>
         <insert tableName="T_DICTIONARY_ELEMENT">
-            <column name="id" value="3"/>
             <column name="code" value="C_SYSTEM.D_VALUE_TYPES.DE_DATE"/>
             <column name="description" value="Value is a date."/>
             <column name="default_value" value="Date"/>
             <column name="dictionary_id" value="1"/>
         </insert>
         <insert tableName="T_DICTIONARY_ELEMENT">
-            <column name="id" value="4"/>
             <column name="code" value="C_SYSTEM.D_VALUE_TYPES.DE_BOOL"/>
             <column name="description" value="Value is a boolean."/>
             <column name="default_value" value="Boolean"/>
@@ -212,14 +208,12 @@
             <column name="collection_id" value="1"/>
         </insert>
         <insert tableName="T_DICTIONARY_ELEMENT">
-            <column name="id" value="5"/>
             <column name="code" value="C_SYSTEM.D_LANGUAGES.DE_LANG_EN"/>
             <column name="description" value="English"/>
             <column name="default_value" value="English"/>
             <column name="dictionary_id" value="2"/>
         </insert>
         <insert tableName="T_DICTIONARY_ELEMENT">
-            <column name="id" value="6"/>
             <column name="code" value="C_SYSTEM.D_LANGUAGES.DE_LANG_RO"/>
             <column name="description" value="Romanian"/>
             <column name="default_value" value="Romanian"/>
