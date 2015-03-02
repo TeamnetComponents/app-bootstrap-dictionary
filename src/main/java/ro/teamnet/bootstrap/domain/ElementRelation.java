@@ -19,6 +19,7 @@ public class ElementRelation implements Serializable {
     private Long id;
 
     @ManyToOne
+    @JoinColumn(name = "relation_id")
     private DictionaryRelation dictionaryRelation;
 
     @ManyToOne
