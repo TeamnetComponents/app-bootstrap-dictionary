@@ -217,7 +217,7 @@
             <column name="dictionary_id" valueComputed="(select id from T_DICTIONARY where code ='C_SYSTEM.D_VALUE_TYPES')"/>
         </insert>
         <insert tableName="T_DICTIONARY">
-            <column name="id" valueComputed="${dictionary_dictionary_element_pk_value}" />
+            <column name="id" valueComputed="${dictionary_pk_value}" />
             <column name="code" value="C_SYSTEM.D_LANGUAGES"/>
             <column name="name" value="Languages"/>
             <column name="description" value="Defines system languages."/>
