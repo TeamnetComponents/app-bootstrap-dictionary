@@ -8,8 +8,17 @@
     <property name="now" value="current_timestamp" dbms="postgresql"/>
     <property name="now" value="sysdate" dbms="oracle"/>
 
-    <property name="pk_value" value="HIBERNATE_SEQUENCE.NEXTVAL" dbms="oracle"/>
-    <property name="pk_value" value="null" dbms="!oracle"/>
+    <property name="dictionary_element_pk_value" value="HIBERNATE_SEQUENCE.NEXTVAL" dbms="oracle"/>
+    <property name="dictionary_element_pk_value" value="nextval('t_dictionary_element_id_seq')" dbms="postgresql"/>
+    <property name="dictionary_element_pk_value" value="null" dbms="!oracle,!postgre"/>
+
+    <property name="dictionary_collection_pk_value" value="HIBERNATE_SEQUENCE.NEXTVAL" dbms="oracle"/>
+    <property name="dictionary_collection_pk_value" value="nextval('t_dictionary_collection_id_seq')" dbms="postgresql"/>
+    <property name="dictionary_collection_pk_value" value="null" dbms="!oracle,!postgresql"/>
+
+    <property name="dictionary_pk_value" value="HIBERNATE_SEQUENCE.NEXTVAL" dbms="oracle"/>
+    <property name="dictionary_pk_value" value="nextval('t_dictionary_id_seq')" dbms="postgresql"/>
+    <property name="dictionary_pk_value" value="null" dbms="!oracle,!postgresql"/>
 
     <!-- Added the DictionaryCollection entity. -->
     <changeSet id="20150108#1" author="bootstrap">
@@ -167,62 +176,62 @@
     <!-- Populating system dictionaries. -->
     <changeSet id="20150127" author="bootstrap">
         <insert tableName="T_DICTIONARY_COLLECTION">
-            <column name="id" valueComputed="${pk_value}" />
+            <column name="id" valueComputed="${dictionary_collection_pk_value}" />
             <column name="code" value="C_SYSTEM"/>
             <column name="name" value="System dictionaries"/>
             <column name="description" value="All system dictionaries should be assigned to this collection."/>
         </insert>
         <insert tableName="T_DICTIONARY">
-            <column name="id" valueComputed="${pk_value}" />
+            <column name="id" valueComputed="${dictionary_pk_value}" />
             <column name="code" value="C_SYSTEM.D_VALUE_TYPES"/>
             <column name="name" value="Value types"/>
             <column name="description" value="Defines the value types of dictionary elements."/>
             <column name="collection_id" valueComputed="(select id from T_DICTIONARY_COLLECTION where code ='C_SYSTEM')"/>
         </insert>
         <insert tableName="T_DICTIONARY_ELEMENT">
-            <column name="id" valueComputed="${pk_value}" />
+            <column name="id" valueComputed="${dictionary_element_pk_value}" />
             <column name="code" value="C_SYSTEM.D_VALUE_TYPES.DE_STRING"/>
             <column name="description" value="Value is a string."/>
             <column name="default_value" value="String"/>
             <column name="dictionary_id" valueComputed="(select id from T_DICTIONARY where code ='C_SYSTEM.D_VALUE_TYPES')"/>
         </insert>
         <insert tableName="T_DICTIONARY_ELEMENT">
-            <column name="id" valueComputed="${pk_value}" />
+            <column name="id" valueComputed="${dictionary_element_pk_value}" />
             <column name="code" value="C_SYSTEM.D_VALUE_TYPES.DE_NUMBER"/>
             <column name="description" value="Value is a number."/>
             <column name="default_value" value="Number"/>
             <column name="dictionary_id" valueComputed="(select id from T_DICTIONARY where code ='C_SYSTEM.D_VALUE_TYPES')"/>
         </insert>
         <insert tableName="T_DICTIONARY_ELEMENT">
-            <column name="id" valueComputed="${pk_value}" />
+            <column name="id" valueComputed="${dictionary_element_pk_value}" />
             <column name="code" value="C_SYSTEM.D_VALUE_TYPES.DE_DATE"/>
             <column name="description" value="Value is a date."/>
             <column name="default_value" value="Date"/>
             <column name="dictionary_id" valueComputed="(select id from T_DICTIONARY where code ='C_SYSTEM.D_VALUE_TYPES')"/>
         </insert>
         <insert tableName="T_DICTIONARY_ELEMENT">
-            <column name="id" valueComputed="${pk_value}" />
+            <column name="id" valueComputed="${dictionary_element_pk_value}" />
             <column name="code" value="C_SYSTEM.D_VALUE_TYPES.DE_BOOL"/>
             <column name="description" value="Value is a boolean."/>
             <column name="default_value" value="Boolean"/>
             <column name="dictionary_id" valueComputed="(select id from T_DICTIONARY where code ='C_SYSTEM.D_VALUE_TYPES')"/>
         </insert>
         <insert tableName="T_DICTIONARY">
-            <column name="id" valueComputed="${pk_value}" />
+            <column name="id" valueComputed="${dictionary_dictionary_element_pk_value}" />
             <column name="code" value="C_SYSTEM.D_LANGUAGES"/>
             <column name="name" value="Languages"/>
             <column name="description" value="Defines system languages."/>
             <column name="collection_id" valueComputed="(select id from T_DICTIONARY_COLLECTION where code ='C_SYSTEM')"/>
         </insert>
         <insert tableName="T_DICTIONARY_ELEMENT">
-            <column name="id" valueComputed="${pk_value}" />
+            <column name="id" valueComputed="${dictionary_element_pk_value}" />
             <column name="code" value="C_SYSTEM.D_LANGUAGES.DE_LANG_EN"/>
             <column name="description" value="English"/>
             <column name="default_value" value="English"/>
             <column name="dictionary_id" valueComputed="(select id from T_DICTIONARY where code ='C_SYSTEM.D_LANGUAGES')"/>
         </insert>
         <insert tableName="T_DICTIONARY_ELEMENT">
-            <column name="id" valueComputed="${pk_value}" />
+            <column name="id" valueComputed="${dictionary_element_pk_value}" />
             <column name="code" value="C_SYSTEM.D_LANGUAGES.DE_LANG_RO"/>
             <column name="description" value="Romanian"/>
             <column name="default_value" value="Romanian"/>
