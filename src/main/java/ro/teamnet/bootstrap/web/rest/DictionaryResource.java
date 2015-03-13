@@ -20,7 +20,7 @@ import javax.servlet.http.HttpServletResponse;
  */
 @RestController
 @RequestMapping("/dictionary")
-public class DictionaryResource extends BaseController {
+public class DictionaryResource {
 
     private final Logger log = LoggerFactory.getLogger(DictionaryResource.class);
 
