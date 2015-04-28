@@ -10,7 +10,6 @@
         <relativePath/>
     </parent>
 
-    <groupId>ro.teamnet.bootstrap</groupId>
     <name>app-bootstrap-dictionary</name>
     <artifactId>app-bootstrap-dictionary</artifactId>
     <version>0.1-SNAPSHOT</version>
