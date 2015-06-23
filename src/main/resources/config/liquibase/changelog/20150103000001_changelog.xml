@@ -23,6 +23,10 @@
     <property name="dictionary_pk_value" value="nextval('t_dictionary_id_seq')" dbms="postgresql"/>
     <property name="dictionary_pk_value" value="null" dbms="!oracle,!postgresql"/>
 
+    <property name="dictionary_value_pk_value" value="HIBERNATE_SEQUENCE.NEXTVAL" dbms="oracle"/>
+    <property name="dictionary_value_pk_value" value="nextval('t_dictionary_value_id_seq')" dbms="postgresql"/>
+    <property name="dictionary_value_pk_value" value="null" dbms="!oracle,!postgresql"/>
+
     <!-- Added the DictionaryCollection entity. -->
     <changeSet id="20150108#1" author="bootstrap">
         <createTable tableName="T_DICTIONARY_COLLECTION">
@@ -278,5 +282,45 @@
             <column name="dictionary_id" valueComputed="(select id from T_DICTIONARY where code ='C_SYSTEM-D_FA')"/>
             <where>code like 'C_SYSTEM-D_FA%'</where>
         </update>
+    </changeSet>
+
+    <changeSet id="20150623#1" author="oanam">
+        <insert tableName="T_DICTIONARY">
+            <column name="id" valueComputed="${dictionary_pk_value}"/>
+            <column name="code" value="C_SYSTEM.D_PARAMS_BOOL"/>
+            <column name="name" value="System parameters"/>
+            <column name="description" value="System parameters (boolean values)"/>
+            <column name="has_i18n" value="false"/>
+            <column name="collection_id"
+                    valueComputed="(select id from T_DICTIONARY_COLLECTION where code ='C_SYSTEM')"/>
+            <column name="value_type_id"
+                    valueComputed="(select id from T_DICTIONARY_ELEMENT where code ='C_SYSTEM.D_VALUE_TYPES.DE_BOOL')"/>
+        </insert>
+        <insert tableName="T_DICTIONARY_ELEMENT">
+            <column name="id" valueComputed="${dictionary_element_pk_value}" />
+            <column name="code" value="C_SYSTEM.D_PARAMS_BOOL.ENABLE_REGISTRATION"/>
+            <column name="description" value="Enable registration"/>
+            <column name="dictionary_id"
+                    valueComputed="(select id from T_DICTIONARY where code ='C_SYSTEM.D_PARAMS_BOOL')"/>
+        </insert>
+        <insert tableName="T_DICTIONARY_VALUE">
+            <column name="id" valueComputed="${dictionary_value_pk_value}" />
+            <column name="value" value="true"/>
+            <column name="dictionary_element_id"
+                    valueComputed="(select id from T_DICTIONARY_ELEMENT where code ='C_SYSTEM.D_PARAMS_BOOL.ENABLE_REGISTRATION')"/>
+        </insert>
+        <insert tableName="T_DICTIONARY_ELEMENT">
+            <column name="id" valueComputed="${dictionary_element_pk_value}" />
+            <column name="code" value="C_SYSTEM.D_PARAMS_BOOL.EMAIL_ACTIVATION"/>
+            <column name="description" value="Enable activation by e-mail"/>
+            <column name="dictionary_id"
+                    valueComputed="(select id from T_DICTIONARY where code ='C_SYSTEM.D_PARAMS_BOOL')"/>
+        </insert>
+        <insert tableName="T_DICTIONARY_VALUE">
+            <column name="id" valueComputed="${dictionary_value_pk_value}" />
+            <column name="value" value="true"/>
+            <column name="dictionary_element_id"
+                    valueComputed="(select id from T_DICTIONARY_ELEMENT where code ='C_SYSTEM.D_PARAMS_BOOL.EMAIL_ACTIVATION')"/>
+        </insert>
     </changeSet>
 </databaseChangeLog>
