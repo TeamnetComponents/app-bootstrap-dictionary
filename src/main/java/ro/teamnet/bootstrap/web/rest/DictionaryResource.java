@@ -11,6 +11,9 @@ import ro.teamnet.bootstrap.domain.Dictionary;
 import ro.teamnet.bootstrap.extend.AppPage;
 import ro.teamnet.bootstrap.extend.AppPageable;
 import ro.teamnet.bootstrap.repository.DictionaryRepository;
+import ro.teamnet.bootstrap.service.AbstractService;
+import ro.teamnet.bootstrap.service.DictionaryRelationService;
+import ro.teamnet.bootstrap.service.DictionaryService;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletResponse;
@@ -19,63 +22,12 @@ import javax.servlet.http.HttpServletResponse;
  * REST controller for managing Dictionary.
  */
 @RestController
-@RequestMapping("/dictionary")
-public class DictionaryResource {
+@RequestMapping("app/rest/dictionary")
+public class DictionaryResource extends AbstractResource<Dictionary,Long>{
 
-    private final Logger log = LoggerFactory.getLogger(DictionaryResource.class);
 
     @Inject
-    private DictionaryRepository dictionaryRepository;
-
-    /**
-     * POST  /rest/dictionaries -> Create a new dictionary.
-     */
-    @RequestMapping(value = "/rest/dictionaries",
-            method = RequestMethod.POST,
-            produces = MediaType.APPLICATION_JSON_VALUE)
-    @Timed
-    public void create(@RequestBody Dictionary dictionary) {
-        log.debug("REST request to save Dictionary : {}", dictionary);
-        dictionaryRepository.save(dictionary);
-    }
-
-    /**
-     * GET  /rest/dictionaries -> get all the dictionaries.
-     */
-    @RequestMapping(value = "/rest/dictionaries",
-            method = RequestMethod.GET,
-            produces = MediaType.APPLICATION_JSON_VALUE)
-    @Timed
-    public AppPage<Dictionary> getAll(AppPageable appPageable) {
-        log.debug("REST request to get all dictionaries");
-        return dictionaryRepository.findAll(appPageable);
-    }
-
-    /**
-     * GET  /rest/dictionaries/:id -> get the "id" dictionary.
-     */
-    @RequestMapping(value = "/rest/dictionaries/{id}",
-            method = RequestMethod.GET,
-            produces = MediaType.APPLICATION_JSON_VALUE)
-    @Timed
-    public ResponseEntity<Dictionary> get(@PathVariable Long id, HttpServletResponse response) {
-        log.debug("REST request to get Dictionary : {}", id);
-        Dictionary dictionary = dictionaryRepository.findOne(id);
-        if (dictionary == null) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-        return new ResponseEntity<>(dictionary, HttpStatus.OK);
-    }
-
-    /**
-     * DELETE  /rest/dictionaries/:id -> delete the "id" dictionary.
-     */
-    @RequestMapping(value = "/rest/dictionaries/{id}",
-            method = RequestMethod.DELETE,
-            produces = MediaType.APPLICATION_JSON_VALUE)
-    @Timed
-    public void delete(@PathVariable Long id) {
-        log.debug("REST request to delete Dictionary : {}", id);
-        dictionaryRepository.delete(id);
+    public DictionaryResource(DictionaryService abstractService) {
+        super(abstractService);
     }
 }

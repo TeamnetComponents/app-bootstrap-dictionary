@@ -4,6 +4,7 @@ import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Collection;
 
 /**
@@ -13,7 +14,7 @@ import java.util.Collection;
 @Entity
 @Table(name = "T_DICTIONARY_COLLECTION")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-public class DictionaryCollection {
+public class DictionaryCollection implements Serializable{
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

@@ -11,6 +11,8 @@ import ro.teamnet.bootstrap.domain.DictionaryElement;
 import ro.teamnet.bootstrap.extend.AppPage;
 import ro.teamnet.bootstrap.extend.AppPageable;
 import ro.teamnet.bootstrap.repository.DictionaryElementRepository;
+import ro.teamnet.bootstrap.service.AbstractService;
+import ro.teamnet.bootstrap.service.DictionaryElementService;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletResponse;
@@ -19,73 +21,31 @@ import javax.servlet.http.HttpServletResponse;
  * REST controller for managing dictionary element.
  */
 @RestController
-@RequestMapping("/dictionary")
-public class DictionaryElementResource {
+@RequestMapping("/app/rest/dictionaryElement")
+public class DictionaryElementResource extends AbstractResource<DictionaryElement,Long>{
+
     private final Logger log = LoggerFactory.getLogger(DictionaryElementResource.class);
 
-    @Inject
-    private DictionaryElementRepository dictionaryElementRepository;
 
-    /**
-     * POST  /rest/dictionaryElements -> Create a new dictionary element.
-     */
-    @RequestMapping(value = "/rest/dictionaryElements",
-            method = RequestMethod.POST,
-            produces = MediaType.APPLICATION_JSON_VALUE)
-    @Timed
-    public void create(@RequestBody DictionaryElement dictionaryElement) {
-        log.debug("REST request to save DictionaryElement : {}", dictionaryElement);
-        dictionaryElementRepository.save(dictionaryElement);
+
+    @Inject
+    public DictionaryElementResource(DictionaryElementService abstractService) {
+        super(abstractService);
     }
 
-    /**
-     * GET  /rest/dictionaryElements -> get all the dictionary elements.
-     */
-    @RequestMapping(value = "/rest/dictionaryElements",
-            method = RequestMethod.GET,
-            produces = MediaType.APPLICATION_JSON_VALUE)
-    @Timed
-    public AppPage<DictionaryElement> getAll(AppPageable appPageable) {
-        log.debug("REST request to get all DictionaryElements");
-        return dictionaryElementRepository.findAll(appPageable);
+    @Override
+    public DictionaryElementService getService() {
+        return (DictionaryElementService) super.getService();
     }
 
     /**
      * GET  /rest/dictionaryElementsByDictionaryCode/{code} -> get all the dictionary elements by dictionary code.
      */
-    @RequestMapping(value = "/rest/dictionaryElementsByDictionaryCode/{code}",
+    @RequestMapping(value = "/{code}",
             method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
     public ResponseEntity getAllByDictionaryCode(@PathVariable String code) {
         log.debug("REST request to get all DictionaryElements by Dictionary code: "+code);
-        return new ResponseEntity<>(dictionaryElementRepository.findByDictionaryCode(code), HttpStatus.OK);
-    }
-
-    /**
-     * GET  /rest/dictionaryElements/:id -> get the "id" dictionary element.
-     */
-    @RequestMapping(value = "/rest/dictionaryElements/{id}",
-            method = RequestMethod.GET,
-            produces = MediaType.APPLICATION_JSON_VALUE)
-    @Timed
-    public ResponseEntity<DictionaryElement> get(@PathVariable Long id, HttpServletResponse response) {
-        log.debug("REST request to get DictionaryElement : {}", id);
-        DictionaryElement dictionaryElement = dictionaryElementRepository.findOne(id);
-        if (dictionaryElement == null) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-        return new ResponseEntity<>(dictionaryElement, HttpStatus.OK);
-    }
-
-    /**
-     * DELETE  /rest/dictionaryElements/:id -> delete the "id" dictionary element.
-     */
-    @RequestMapping(value = "/rest/dictionaryElements/{id}",
-            method = RequestMethod.DELETE,
-            produces = MediaType.APPLICATION_JSON_VALUE)
-    @Timed
-    public void delete(@PathVariable Long id) {
-        log.debug("REST request to delete DictionaryElement : {}", id);
-        dictionaryElementRepository.delete(id);
+        return new ResponseEntity<>(getService().findByDictionaryCode(code), HttpStatus.OK);
     }
 }

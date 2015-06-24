@@ -11,6 +11,8 @@ import ro.teamnet.bootstrap.domain.DictionaryRelation;
 import ro.teamnet.bootstrap.extend.AppPage;
 import ro.teamnet.bootstrap.extend.AppPageable;
 import ro.teamnet.bootstrap.repository.DictionaryRelationRepository;
+import ro.teamnet.bootstrap.service.AbstractService;
+import ro.teamnet.bootstrap.service.DictionaryRelationService;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletResponse;
@@ -19,63 +21,11 @@ import javax.servlet.http.HttpServletResponse;
  * REST controller for managing DictionaryRelation.
  */
 @RestController
-@RequestMapping("/dictionary")
-public class DictionaryRelationResource {
-
-    private final Logger log = LoggerFactory.getLogger(DictionaryRelationResource.class);
+@RequestMapping("/app/rest/dictionaryRelation")
+public class DictionaryRelationResource extends AbstractResource<DictionaryRelation,Long>{
 
     @Inject
-    private DictionaryRelationRepository dictionaryRelationRepository;
-
-    /**
-     * POST  /dictionaryRelations -> Create a new dictionaryRelation.
-     */
-    @RequestMapping(value = "/rest/dictionaryRelations",
-            method = RequestMethod.POST,
-            produces = MediaType.APPLICATION_JSON_VALUE)
-    @Timed
-    public void create(@RequestBody DictionaryRelation dictionaryRelation) {
-        log.debug("REST request to save DictionaryRelation : {}", dictionaryRelation);
-        dictionaryRelationRepository.save(dictionaryRelation);
-    }
-
-    /**
-     * GET  /dictionaryRelations -> get all the dictionaryRelations.
-     */
-    @RequestMapping(value = "/rest/dictionaryRelations",
-            method = RequestMethod.GET,
-            produces = MediaType.APPLICATION_JSON_VALUE)
-    @Timed
-    public AppPage<DictionaryRelation> getAll(AppPageable appPageable) {
-        log.debug("REST request to get all DictionaryRelations");
-        return dictionaryRelationRepository.findAll(appPageable);
-    }
-
-    /**
-     * GET  /dictionaryRelations/:id -> get the "id" dictionaryRelation.
-     */
-    @RequestMapping(value = "/rest/dictionaryRelations/{id}",
-            method = RequestMethod.GET,
-            produces = MediaType.APPLICATION_JSON_VALUE)
-    @Timed
-    public ResponseEntity<DictionaryRelation> get(@PathVariable Long id, HttpServletResponse response) {
-        log.debug("REST request to get DictionaryRelation : {}", id);
-        DictionaryRelation dictionaryRelation = dictionaryRelationRepository.findOne(id);
-        if (dictionaryRelation == null) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-        return new ResponseEntity<>(dictionaryRelation, HttpStatus.OK);
-    }
-
-    /**
-     * DELETE  /dictionaryRelations/:id -> delete the "id" dictionaryRelation.
-     */
-    @RequestMapping(value = "/rest/dictionaryRelations/{id}",
-            method = RequestMethod.DELETE,
-            produces = MediaType.APPLICATION_JSON_VALUE)
-    @Timed
-    public void delete(@PathVariable Long id) {
-        log.debug("REST request to delete DictionaryRelation : {}", id);
-        dictionaryRelationRepository.delete(id);
+    public DictionaryRelationResource(DictionaryRelationService abstractService) {
+        super(abstractService);
     }
 }
