@@ -41,7 +41,7 @@ public class DictionaryElementResource extends AbstractResource<DictionaryElemen
     /**
      * GET  /rest/dictionaryElementsByDictionaryCode/{code} -> get all the dictionary elements by dictionary code.
      */
-    @RequestMapping(value = "/{code}",
+    @RequestMapping(value = "/byCode/{code}",
             method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
     public ResponseEntity getAllByDictionaryCode(@PathVariable String code) {
