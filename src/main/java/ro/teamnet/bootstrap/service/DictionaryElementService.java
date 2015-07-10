@@ -8,4 +8,8 @@ import java.util.List;
 public interface DictionaryElementService  extends AbstractService<DictionaryElement,Long>{
 
     List<DictionaryElement> findByDictionaryCode(String dictionaryCode);
+
+    DictionaryElement findByDictionaryElementCode(String dictElemCode);
+
+    String getElemDefaultValByCode(String dictElemCode);
 }

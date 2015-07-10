@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+
+    <property name="now" value="now()" dbms="mysql,h2"/>
+    <property name="now" value="current_timestamp" dbms="postgresql"/>
+    <property name="now" value="sysdate" dbms="oracle"/>
+
+    <property name="file_ext" value="_orcl" dbms="oracle" />
+    <property name="file_ext" value="" dbms="!oracle" />
+
+    <property name="dictionary_element_pk_value" value="HIBERNATE_SEQUENCE.NEXTVAL" dbms="oracle"/>
+    <property name="dictionary_element_pk_value" value="nextval('t_dictionary_element_id_seq')" dbms="postgresql"/>
+    <property name="dictionary_element_pk_value" value="null" dbms="!oracle,!postgre"/>
+
+    <property name="dictionary_collection_pk_value" value="HIBERNATE_SEQUENCE.NEXTVAL" dbms="oracle"/>
+    <property name="dictionary_collection_pk_value" value="nextval('t_dictionary_collection_id_seq')" dbms="postgresql"/>
+    <property name="dictionary_collection_pk_value" value="null" dbms="!oracle,!postgresql"/>
+
+    <property name="dictionary_pk_value" value="HIBERNATE_SEQUENCE.NEXTVAL" dbms="oracle"/>
+    <property name="dictionary_pk_value" value="nextval('t_dictionary_id_seq')" dbms="postgresql"/>
+    <property name="dictionary_pk_value" value="null" dbms="!oracle,!postgresql"/>
+
+    <property name="dictionary_value_pk_value" value="HIBERNATE_SEQUENCE.NEXTVAL" dbms="oracle"/>
+    <property name="dictionary_value_pk_value" value="nextval('t_dictionary_value_id_seq')" dbms="postgresql"/>
+    <property name="dictionary_value_pk_value" value="null" dbms="!oracle,!postgresql"/>
+
+    <!-- Populating TDI dictionaries. -->
+    <changeSet id="20150710113700" author="marian">
+        <insert tableName="T_DICTIONARY_COLLECTION">
+            <column name="id" valueComputed="${dictionary_collection_pk_value}" />
+            <column name="code" value="C_TDI"/>
+            <column name="name" value="TDI dictionaries"/>
+            <column name="description" value=""/>
+        </insert>
+
+        <insert tableName="T_DICTIONARY_COLLECTION">
+            <column name="id" valueComputed="${dictionary_collection_pk_value}" />
+            <column name="code" value="C_PENTAHO"/>
+            <column name="name" value="PENTAHO dictionaries"/>
+            <column name="description" value=""/>
+            <column name="parent_collection_id" valueComputed="(select id from T_DICTIONARY_COLLECTION where code ='C_TDI')"/>
+        </insert>
+
+        <insert tableName="T_DICTIONARY">
+            <column name="id" valueComputed="${dictionary_pk_value}" />
+            <column name="code" value="C_PENTAHO.D_STRING_PARAMS"/>
+            <column name="name" value="Parameters"/>
+            <column name="description" value="Useful parameters for configuration."/>
+            <column name="collection_id" valueComputed="(select id from T_DICTIONARY_COLLECTION where code ='C_PENTAHO')"/>
+        </insert>
+
+        <insert tableName="T_DICTIONARY_ELEMENT">
+            <column name="id" valueComputed="${dictionary_element_pk_value}" />
+            <column name="code" value="C_PENTAHO.D_STRING_PARAMS.DE_DB_NAME"/>
+            <column name="description" value="Pentaho repository name."/>
+            <column name="default_value" value="TDI Config"/>
+            <column name="dictionary_id" valueComputed="(select id from T_DICTIONARY where code ='C_PENTAHO.D_STRING_PARAMS')"/>
+        </insert>
+
+        <insert tableName="T_DICTIONARY_ELEMENT">
+            <column name="id" valueComputed="${dictionary_element_pk_value}" />
+            <column name="code" value="C_PENTAHO.D_STRING_PARAMS.DE_FILE_PATH"/>
+            <column name="description" value="Generated CSV pathname."/>
+            <column name="default_value" value=""/>
+            <column name="dictionary_id" valueComputed="(select id from T_DICTIONARY where code ='C_PENTAHO.D_STRING_PARAMS')"/>
+        </insert>
+
+    </changeSet>
+</databaseChangeLog>

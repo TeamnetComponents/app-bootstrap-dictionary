@@ -13,4 +13,10 @@ import java.util.List;
 public interface DictionaryElementRepository extends AppRepository<DictionaryElement, Long> {
     @Query("select de from DictionaryElement de join de.dictionary d where d.code = :dictionaryCode")
     List<DictionaryElement> findByDictionaryCode(@Param(value = "dictionaryCode") String dictionaryCode);
+
+    @Query("select de from DictionaryElement de where de.code = :dictElemCode")
+    DictionaryElement findByDictionaryElementCode(@Param(value = "dictElemCode") String dictElemCode);
+
+    @Query("select de.defaultValue from DictionaryElement de where de.code = :dictElemCode")
+    String getElemDefaultValByCode(@Param(value = "dictElemCode") String dictElemCode);
 }

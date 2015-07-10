@@ -25,4 +25,14 @@ public class DictionaryElementServiceImpl extends AbstractServiceImpl<Dictionary
     public List<DictionaryElement> findByDictionaryCode(String dictionaryCode) {
         return getRepository().findByDictionaryCode(dictionaryCode);
     }
+
+    @Override
+    public DictionaryElement findByDictionaryElementCode(String dictElemCode) {
+        return getRepository().findByDictionaryElementCode(dictElemCode);
+    }
+
+    @Override
+    public String getElemDefaultValByCode(String dictElemCode) {
+        return getRepository().getElemDefaultValByCode(dictElemCode);
+    }
 }
