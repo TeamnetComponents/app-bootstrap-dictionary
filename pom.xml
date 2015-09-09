@@ -15,6 +15,25 @@
     <artifactId>app-bootstrap-dictionary</artifactId>
     <version>0.2-SNAPSHOT</version>
 
+    <distributionManagement>
+        <repository>
+            <id>tni-hq-artifact</id>
+            <name>tni-hq-artifact-releases</name>
+            <url>http://repo.teamnet.ro/tn-components</url>
+        </repository>
+        <snapshotRepository>
+            <id>tni-hq-artifact</id>
+            <name>tni-hq-artifact-snapshots</name>
+            <url>http://repo.teamnet.ro/tn-components</url>
+        </snapshotRepository>
+    </distributionManagement>
+
+    <scm>
+        <url>http://git-components.teamnet.ro/summary/components%2Fjava%2Fapp-boostrap-dictionary.git</url>
+        <connection>scm:git:ssh://oana.mihai@git-components.teamnet.ro:29418/components/java/app-boostrap-dictionary.git</connection>
+        <tag>HEAD</tag>
+    </scm>
+
     <dependencies>
         <dependency>
             <groupId>ro.teamnet.bootstrap</groupId>
