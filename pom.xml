@@ -28,7 +28,7 @@
 
     <scm>
         <url>http://git-components.teamnet.ro/summary/components%2Fjava%2Fapp-bootstrap-dictionary.git</url>
-        <connection>scm:git:ssh://oana.mihai@git-components.teamnet.ro:29418/components/java/app-bootstrap-dictionary.git</connection>
+        <connection>scm:git:http://component-publisher@git-components.teamnet.ro/r/components/java/app-bootstrap-dictionary.git</connection>
         <tag>HEAD</tag>
     </scm>
 
