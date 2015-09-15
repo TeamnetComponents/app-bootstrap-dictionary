@@ -180,6 +180,38 @@
 
     </changeSet>
 
+    <!-- Change bit column type to boolean to ensure oracle compatibility. -->
+    <changeSet id="20150120" author="oanam">
+        <modifyDataType
+                tableName="T_DICTIONARY"
+                columnName="has_i18n"
+                newDataType="boolean"/>
+        <addDefaultValue tableName="T_DICTIONARY"
+                         columnName="has_i18n"
+                         defaultValueBoolean="false"/>
+        <modifyDataType
+                tableName="T_DICTIONARY_RELATION"
+                columnName="required"
+                newDataType="boolean"/>
+        <addDefaultValue tableName="T_DICTIONARY_RELATION"
+                         columnName="required"
+                         defaultValueBoolean="false"/>
+        <modifyDataType
+                tableName="T_DICTIONARY_RELATION"
+                columnName="multiple_sources"
+                newDataType="boolean"/>
+        <addDefaultValue tableName="T_DICTIONARY_RELATION"
+                         columnName="multiple_sources"
+                         defaultValueBoolean="false"/>
+        <modifyDataType
+                tableName="T_DICTIONARY_RELATION"
+                columnName="multiple_destinations"
+                newDataType="boolean"/>
+        <addDefaultValue tableName="T_DICTIONARY_RELATION"
+                         columnName="multiple_destinations"
+                         defaultValueBoolean="false"/>
+    </changeSet>
+
     <!-- Populating system dictionaries. -->
     <changeSet id="20150127" author="bootstrap">
         <insert tableName="T_DICTIONARY_COLLECTION">
@@ -290,7 +322,7 @@
             <column name="code" value="C_SYSTEM.D_PARAMS_BOOL"/>
             <column name="name" value="System parameters"/>
             <column name="description" value="System parameters (boolean values)"/>
-            <column name="has_i18n" value="false"/>
+            <column name="has_i18n" valueBoolean="false"/>
             <column name="collection_id"
                     valueComputed="(select id from T_DICTIONARY_COLLECTION where code ='C_SYSTEM')"/>
             <column name="value_type_id"
