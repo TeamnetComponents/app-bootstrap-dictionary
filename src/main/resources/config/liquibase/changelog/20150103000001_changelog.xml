@@ -9,26 +9,31 @@
     <property name="now" value="sysdate" dbms="oracle"/>
 
     <property name="file_ext" value="_orcl" dbms="oracle" />
-    <property name="file_ext" value="" dbms="!oracle" />
+    <property name="file_ext" value="_mssql" dbms="mssql" />
+    <property name="file_ext" value="" dbms="!oracle,!mssql" />
 
     <property name="dictionary_element_pk_value" value="HIBERNATE_SEQUENCE.NEXTVAL" dbms="oracle"/>
+	<property name="dictionary_element_pk_value" value="next value for hibernate_sequence" dbms="mssql"/>
     <property name="dictionary_element_pk_value" value="nextval('t_dictionary_element_id_seq')" dbms="postgresql"/>
-    <property name="dictionary_element_pk_value" value="null" dbms="!oracle,!postgre"/>
+    <property name="dictionary_element_pk_value" value="null" dbms="!oracle,!postgresql,!mssql"/>
 
     <property name="dictionary_collection_pk_value" value="HIBERNATE_SEQUENCE.NEXTVAL" dbms="oracle"/>
+	<property name="dictionary_collection_pk_value" value="next value for hibernate_sequence" dbms="mssql"/>
     <property name="dictionary_collection_pk_value" value="nextval('t_dictionary_collection_id_seq')" dbms="postgresql"/>
-    <property name="dictionary_collection_pk_value" value="null" dbms="!oracle,!postgresql"/>
+    <property name="dictionary_collection_pk_value" value="null" dbms="!oracle,!postgresql,!mssql"/>
 
     <property name="dictionary_pk_value" value="HIBERNATE_SEQUENCE.NEXTVAL" dbms="oracle"/>
+	<property name="dictionary_pk_value" value="next value for hibernate_sequence" dbms="mssql"/>
     <property name="dictionary_pk_value" value="nextval('t_dictionary_id_seq')" dbms="postgresql"/>
-    <property name="dictionary_pk_value" value="null" dbms="!oracle,!postgresql"/>
+    <property name="dictionary_pk_value" value="null" dbms="!oracle,!postgresql,!mssql"/>
 
     <property name="dictionary_value_pk_value" value="HIBERNATE_SEQUENCE.NEXTVAL" dbms="oracle"/>
+	<property name="dictionary_value_pk_value" value="next value for hibernate_sequence" dbms="mssql"/>
     <property name="dictionary_value_pk_value" value="nextval('t_dictionary_value_id_seq')" dbms="postgresql"/>
-    <property name="dictionary_value_pk_value" value="null" dbms="!oracle,!postgresql"/>
+    <property name="dictionary_value_pk_value" value="null" dbms="!oracle,!postgresql,!mssql"/>
 
     <!-- Added the DictionaryCollection entity. -->
-    <changeSet id="20150108#1" author="bootstrap">
+    <changeSet id="20150108#1" author="bootstrap" dbms="!mssql">
         <createTable tableName="T_DICTIONARY_COLLECTION">
             <column name="id" type="bigint" autoIncrement="true">
                 <constraints primaryKey="true" nullable="false"/>
@@ -46,8 +51,26 @@
                                  referencedTableName="T_DICTIONARY_COLLECTION"/>
     </changeSet>
 
+    <changeSet id="20150108#1#mssql" author="bootstrap" dbms="mssql">
+        <createTable tableName="T_DICTIONARY_COLLECTION">
+            <column name="id" type="bigint" autoIncrement="false">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="code" type="varchar(255)"/>
+            <column name="name" type="varchar(255)"/>
+            <column name="description" type="varchar(255)"/>
+            <column name="parent_collection_id" type="bigint"/>
+        </createTable>
+
+        <addForeignKeyConstraint baseColumnNames="parent_collection_id"
+                                 baseTableName="T_DICTIONARY_COLLECTION"
+                                 constraintName="fk_parent_collection"
+                                 referencedColumnNames="id"
+                                 referencedTableName="T_DICTIONARY_COLLECTION"/>
+    </changeSet>
+
     <!-- Added the Dictionary entity. -->
-    <changeSet id="20150108#2" author="bootstrap">
+    <changeSet id="20150108#2" author="bootstrap" dbms="!mssql">
         <createTable tableName="T_DICTIONARY">
             <column name="id" type="bigint" autoIncrement="true">
                 <constraints primaryKey="true" nullable="false"/>
@@ -61,8 +84,22 @@
         </createTable>
     </changeSet>
 
+    <changeSet id="20150108#2#mssql" author="bootstrap" dbms="mssql">
+        <createTable tableName="T_DICTIONARY">
+            <column name="id" type="bigint" autoIncrement="false">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="code" type="varchar(255)"/>
+            <column name="name" type="varchar(255)"/>
+            <column name="description" type="varchar(255)"/>
+            <column name="has_i18n" type="bit" defaultValue="0"/>
+            <column name="collection_id" type="bigint"/>
+            <column name="value_type_id" type="bigint"/>
+        </createTable>
+    </changeSet>
+
     <!-- Added the DictionaryElement entity. -->
-    <changeSet id="20150108#3" author="bootstrap">
+    <changeSet id="20150108#3" author="bootstrap" dbms="!mssql">
         <createTable tableName="T_DICTIONARY_ELEMENT">
             <column name="id" type="bigint" autoIncrement="true">
                 <constraints primaryKey="true" nullable="false"/>
@@ -74,10 +111,35 @@
         </createTable>
     </changeSet>
 
+    <changeSet id="20150108#3mssql" author="bootstrap" dbms="mssql">
+        <createTable tableName="T_DICTIONARY_ELEMENT">
+            <column name="id" type="bigint" autoIncrement="false">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="code" type="varchar(255)"/>
+            <column name="description" type="varchar(255)"/>
+            <column name="default_value" type="varchar(255)"/>
+            <column name="dictionary_id" type="bigint"/>
+        </createTable>
+    </changeSet>
+
     <!-- Added the DictionaryValue entity. -->
-    <changeSet id="20150108#4" author="bootstrap">
+    <changeSet id="20150108#4" author="bootstrap" dbms="!mssql">
         <createTable tableName="T_DICTIONARY_VALUE">
             <column name="id" type="bigint" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="dictionary_element_id" type="bigint"/>
+            <column name="language_id" type="bigint"/>
+            <column name="value" type="varchar(255)"/>
+            <column name="activation_date" type="date"/>
+            <column name="inactivation_date" type="date"/>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="20150108#4#mssql" author="bootstrap" dbms="mssql">
+        <createTable tableName="T_DICTIONARY_VALUE">
+            <column name="id" type="bigint" autoIncrement="false">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
             <column name="dictionary_element_id" type="bigint"/>
@@ -122,7 +184,7 @@
     </changeSet>
 
     <!-- Added the entity DictionaryRelation. -->
-    <changeSet id="20150112" author="bootstrap">
+    <changeSet id="20150112" author="bootstrap" dbms="!mssql">
         <createTable tableName="T_DICTIONARY_RELATION">
             <column name="id" type="bigint" autoIncrement="true">
                 <constraints primaryKey="true" nullable="false"/>
@@ -149,8 +211,35 @@
 
     </changeSet>
 
+    <changeSet id="20150112#mssql" author="bootstrap" dbms="mssql">
+        <createTable tableName="T_DICTIONARY_RELATION">
+            <column name="id" type="bigint" autoIncrement="false">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="name" type="varchar(255)"/>
+            <column name="required" type="bit" defaultValue="0"/>
+            <column name="source_id" type="bigint"/>
+            <column name="multiple_sources" type="bit" defaultValue="0"/>
+            <column name="destination_id" type="bigint"/>
+            <column name="multiple_destinations" type="bit" defaultValue="0"/>
+        </createTable>
+
+        <addForeignKeyConstraint baseColumnNames="source_id"
+                                 baseTableName="T_DICTIONARY_RELATION"
+                                 constraintName="fk_src_dict_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="T_DICTIONARY"/>
+
+        <addForeignKeyConstraint baseColumnNames="destination_id"
+                                 baseTableName="T_DICTIONARY_RELATION"
+                                 constraintName="fk_dest_dict_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="T_DICTIONARY"/>
+
+    </changeSet>
+
     <!-- Added the entity ElementRelation. -->
-    <changeSet id="20150113" author="bootstrap">
+    <changeSet id="20150113" author="bootstrap" dbms="!mssql">
         <createTable tableName="T_ELEMENT_RELATION">
             <column name="id" type="bigint" autoIncrement="true">
                 <constraints primaryKey="true" nullable="false"/>
@@ -178,6 +267,44 @@
                                  referencedColumnNames="id"
                                  referencedTableName="T_DICTIONARY_ELEMENT"/>
 
+    </changeSet>
+
+    <changeSet id="20150113#mssql" author="bootstrap" dbms="mssql">
+        <createTable tableName="T_ELEMENT_RELATION">
+            <column name="id" type="bigint" autoIncrement="false">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="relation_id" type="bigint"/>
+            <column name="source_id" type="bigint"/>
+            <column name="destination_id" type="bigint"/>
+        </createTable>
+
+        <addForeignKeyConstraint baseColumnNames="relation_id"
+                                 baseTableName="T_ELEMENT_RELATION"
+                                 constraintName="fk_elem_dict_rel_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="T_DICTIONARY_RELATION"/>
+
+        <addForeignKeyConstraint baseColumnNames="source_id"
+                                 baseTableName="T_ELEMENT_RELATION"
+                                 constraintName="fk_src_elem_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="T_DICTIONARY_ELEMENT"/>
+
+        <addForeignKeyConstraint baseColumnNames="destination_id"
+                                 baseTableName="T_ELEMENT_RELATION"
+                                 constraintName="fk_dest_elem_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="T_DICTIONARY_ELEMENT"/>
+
+    </changeSet>
+
+    <!-- Drop default value constraints to ensure mssql compatibility. -->
+    <changeSet id="20150115" author="bootstrap" dbms="mssql">
+        <dropDefaultValue tableName="T_DICTIONARY" columnName="has_i18n"/>
+        <dropDefaultValue tableName="T_DICTIONARY_RELATION" columnName="required"/>
+        <dropDefaultValue tableName="T_DICTIONARY_RELATION" columnName="multiple_sources"/>
+        <dropDefaultValue tableName="T_DICTIONARY_RELATION" columnName="multiple_destinations"/>
     </changeSet>
 
     <!-- Change bit column type to boolean to ensure oracle compatibility. -->
@@ -278,7 +405,7 @@
         </insert>
     </changeSet>
 
-    <changeSet id="12022015#1" author="bootstrap" dbms="!oracle">
+    <changeSet id="12022015#1" author="bootstrap" dbms="!oracle, !mssql">
         <insert tableName="T_DICTIONARY">
             <column name="code" value="C_SYSTEM-D_FA"/>
             <column name="name" value="FontAwesome icon classes"/>
@@ -295,6 +422,23 @@
     <changeSet id="12022015#1" author="bootstrap" dbms="oracle">
         <insert tableName="T_DICTIONARY">
             <column name="id" valueComputed="HIBERNATE_SEQUENCE.NEXTVAL" />
+            <column name="code" value="C_SYSTEM-D_FA"/>
+            <column name="name" value="FontAwesome icon classes"/>
+            <column name="description" value="FontAwesome available icon css classes"/>
+            <column name="collection_id" valueComputed="(select id from T_DICTIONARY_COLLECTION where code ='C_SYSTEM')"/>
+        </insert>
+
+        <loadData encoding="UTF-8"
+                  file="config/liquibase/dictionary_fa_icons${file_ext}.csv"
+                  separator=";"
+                  tableName="T_DICTIONARY_ELEMENT">
+            <column name="id" type="NUMERIC" />
+        </loadData>
+    </changeSet>
+
+    <changeSet id="12022015#1#mssql#zzz" author="bootstrap" dbms="mssql">
+        <insert tableName="T_DICTIONARY">
+            <column name="id" valueComputed="${dictionary_pk_value}"/>
             <column name="code" value="C_SYSTEM-D_FA"/>
             <column name="name" value="FontAwesome icon classes"/>
             <column name="description" value="FontAwesome available icon css classes"/>

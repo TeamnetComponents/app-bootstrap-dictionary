@@ -17,7 +17,7 @@ import java.util.Collection;
 public class DictionaryCollection implements Serializable{
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
 
     @Column(name = "code")

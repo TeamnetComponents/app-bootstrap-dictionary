@@ -12,20 +12,24 @@
     <property name="file_ext" value="" dbms="!oracle" />
 
     <property name="dictionary_element_pk_value" value="HIBERNATE_SEQUENCE.NEXTVAL" dbms="oracle"/>
+	<property name="dictionary_element_pk_value" value="next value for hibernate_sequence" dbms="mssql"/>
     <property name="dictionary_element_pk_value" value="nextval('t_dictionary_element_id_seq')" dbms="postgresql"/>
-    <property name="dictionary_element_pk_value" value="null" dbms="!oracle,!postgre"/>
+    <property name="dictionary_element_pk_value" value="null" dbms="!oracle,!postgresql,!mssql"/>
 
     <property name="dictionary_collection_pk_value" value="HIBERNATE_SEQUENCE.NEXTVAL" dbms="oracle"/>
+	<property name="dictionary_collection_pk_value" value="next value for hibernate_sequence" dbms="mssql"/>
     <property name="dictionary_collection_pk_value" value="nextval('t_dictionary_collection_id_seq')" dbms="postgresql"/>
-    <property name="dictionary_collection_pk_value" value="null" dbms="!oracle,!postgresql"/>
+    <property name="dictionary_collection_pk_value" value="null" dbms="!oracle,!postgresql,!mssql"/>
 
     <property name="dictionary_pk_value" value="HIBERNATE_SEQUENCE.NEXTVAL" dbms="oracle"/>
+	<property name="dictionary_pk_value" value="next value for hibernate_sequence" dbms="mssql"/>
     <property name="dictionary_pk_value" value="nextval('t_dictionary_id_seq')" dbms="postgresql"/>
-    <property name="dictionary_pk_value" value="null" dbms="!oracle,!postgresql"/>
+    <property name="dictionary_pk_value" value="null" dbms="!oracle,!postgresql,!mssql"/>
 
     <property name="dictionary_value_pk_value" value="HIBERNATE_SEQUENCE.NEXTVAL" dbms="oracle"/>
+	<property name="dictionary_value_pk_value" value="next value for hibernate_sequence" dbms="mssql"/>
     <property name="dictionary_value_pk_value" value="nextval('t_dictionary_value_id_seq')" dbms="postgresql"/>
-    <property name="dictionary_value_pk_value" value="null" dbms="!oracle,!postgresql"/>
+    <property name="dictionary_value_pk_value" value="null" dbms="!oracle,!postgresql,!mssql"/>
 
     <!-- Populating TDI dictionaries. -->
     <changeSet id="20150710113700" author="marian">
