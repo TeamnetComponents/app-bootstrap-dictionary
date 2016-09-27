@@ -4,14 +4,14 @@
     <parent>
         <groupId>ro.teamnet.bootstrap</groupId>
         <artifactId>bootstrap-dependencies</artifactId>
-        <version>0.2.15</version>
+        <version>0.2.16-SNAPSHOT</version>
         <relativePath />
     </parent>
 
     <groupId>ro.teamnet.bootstrap</groupId>
     <name>app-bootstrap-dictionary</name>
     <artifactId>app-bootstrap-dictionary</artifactId>
-    <version>0.2.15</version>
+    <version>0.2.16-SNAPSHOT</version>
 
     <distributionManagement>
         <repository>
@@ -36,7 +36,7 @@
         <dependency>
             <groupId>ro.teamnet.bootstrap</groupId>
             <artifactId>app-bootstrap-commons</artifactId>
-            <version>0.2.15</version>
+            <version>0.2.16-SNAPSHOT</version>
         </dependency>
     </dependencies>
 
